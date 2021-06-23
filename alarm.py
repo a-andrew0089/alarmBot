@@ -1,4 +1,8 @@
 from datetime import datetime
+import sched
+import time
+
+scheduler = sched.scheduler(time.time, time.sleep)
 
 async def alarmPreProcessing (client, message, users_ref)
     alarmMsg = message.content.split("-setAlarm ", 1)[1]
