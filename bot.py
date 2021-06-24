@@ -1,7 +1,4 @@
 import discord
-import os
-import sys
-import database
 import datetime
 from decouple import config
 
