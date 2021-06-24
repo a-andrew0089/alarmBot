@@ -1,16 +1,13 @@
 import discord
 import os
 import sys
-from firebase_admin import db 
-
 import database
+import datetime
 from decouple import config
 
-class alarmData:
-    def __init__(self, userID, startTime, alarmTime):
-        self.userID = userID
-        self.startTime = startTime
-        self.alarmTime = alarmTime
+import alarm
+
+alarmList = []
 
 intents = discord.Intents.default()
 intents.presences = True
@@ -18,10 +15,6 @@ intents.members = True
 intents.messages = True
 intents.voice_states = True
 client = discord.Client(intents=intents)
-
-ref = db.reference('/')
-users_ref = ref.child('users')
-liveUsers_ref = ref.child('live')
 
 @client.event
 async def on_ready():
@@ -33,6 +26,9 @@ async def on_message(message):
         return 
 
     if message.content.startswith("-setAlarm"):
-        await notifyMe.alarmPreProcessing(client, message, users_ref)
+        await alarm.alarmProcessing(alarmList, message)
+    
+    if message.content.startswith("-listAlarms"):
+        await alarm.listAlarms(alarmList, message)           
 
 client.run(config("DISCORD_BOT_TOKEN"))
