@@ -22,7 +22,7 @@ async def on_message(message):
     if message.content.startswith("-setAlarm"):
         await alarm.alarmProcessing(message)
     
-    if message.content.startswith("-listAlarms"):
+    if message.content.startswith("-listAlarms") or message.content.startswith("-listAlarm"):
         await alarm.listAlarms(message)  
 
     if message.content.startswith("-test"):

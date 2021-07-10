@@ -42,7 +42,8 @@ async def alarmProcessing (message):
 
     end = message.created_at + datetime.timedelta(minutes=alarmTime)
     alarmList.append(alarmData(message.author.display_name, message.created_at, end))
-    #sort alarmList by datetime
+    
+    alarmList.sort(key=lambda x:x.alarmTime)
 
     if startTimer:
         loop = asyncio.get_event_loop()
@@ -55,5 +56,5 @@ async def listAlarms(message):
     num = 1
     for x in alarmList:
         await message.channel.send(("Alarm #: "+ str(num) + "\nUser: " + str(x.userID) + 
-                                     "\nAlarm: {:02d}".format(x.alarmTime.hour) +":{:02d}".format(x.alarmTime.minute)))
+            "\nAlarm: {:02d}".format(x.alarmTime.hour) +":{:02d}".format(x.alarmTime.minute)))
         num += 1    

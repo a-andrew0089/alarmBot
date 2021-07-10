@@ -21,9 +21,13 @@ Make sure you do run the first time with a `init` flag
 
 Currently the bot can:
 1. Join a discord server
+2. Save user created alarms in minutes
+3. List current set alarms
+4. Notify user when alarm time has elapsed and remove the alarm from the list
 
 Future plan:
-1. Take in a time in minutes and let the user know the time has elapsed
+1. Have the bot join the server of the user who set the alarm and play a song
+2. Have a setting to make it a recurring alarm i.e. the Pomodoro technique
 
 One can run the main bot using 
 ```bash
