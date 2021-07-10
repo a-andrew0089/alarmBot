@@ -1,10 +1,7 @@
 import discord
-import datetime
 from decouple import config
 
 import alarm
-
-alarmList = []
 
 intents = discord.Intents.default()
 intents.presences = True
@@ -23,9 +20,15 @@ async def on_message(message):
         return 
 
     if message.content.startswith("-setAlarm"):
-        await alarm.alarmProcessing(alarmList, message)
+        await alarm.alarmProcessing(message)
     
     if message.content.startswith("-listAlarms"):
-        await alarm.listAlarms(alarmList, message)           
+        await alarm.listAlarms(message)  
+
+    if message.content.startswith("-test"):
+        await alarm.threadStuff(message)
+
+    #command to select alarm music
+    #set alarm with unique music
 
 client.run(config("DISCORD_BOT_TOKEN"))
