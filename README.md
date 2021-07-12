@@ -24,12 +24,12 @@ Currently the bot can:
 2. Save user created alarms in minutes
 3. List current set alarms
 4. Notify user when alarm time has elapsed and remove the alarm from the list
+5. Change the timezone when displaying times
+6. Delete alarms by alarm #
 
 Future plan:
-1. Allow user to update bot timezone
-2. Delete alarms by Alarm #
-3. Have the bot join the server of the user who set the alarm and play a song
-4. Have a setting to make it a recurring alarm i.e. the Pomodoro technique
+1. Have the bot join the server of the user who set the alarm and play a song
+2. Have a setting to make it a recurring alarm i.e. the Pomodoro technique
 
 One can run the main bot using 
 ```bash

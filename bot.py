@@ -23,10 +23,16 @@ async def on_message(message):
         await alarm.alarmProcessing(message)
     
     if message.content.startswith("-listAlarms") or message.content.startswith("-listAlarm"):
-        await alarm.listAlarms(message)  
+        await alarm.listAlarms(message)
+
+    if message.content.startswith("-setTZ"):
+        await alarm.adjustTimezone(message)
+
+    if message.content.startswith("-delAlarm"):
+        await alarm.deleteAlarm(message)
 
     if message.content.startswith("-test"):
-        await alarm.threadStuff(message)
+        await alarm.testStuff()
 
     #command to select alarm music
     #set alarm with unique music
