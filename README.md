@@ -27,10 +27,10 @@ Currently the bot can:
 5. Change the timezone when displaying times
 6. Delete alarms by alarm #
 7. Bot will join voice channel of user who set alarm and play a default song
+8. User can change the default alarm URL or set URL by alarm
 
 Future plan:
-1. Allow user to change default URL or set URL by alarm
-2. Have a setting to make it a recurring alarm i.e. the Pomodoro technique
+1. Have a setting to make it a recurring alarm i.e. the Pomodoro technique
 
 One can run the main bot using 
 ```bash

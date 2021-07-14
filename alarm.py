@@ -13,13 +13,13 @@ url = "https://www.youtube.com/watch?v=y_pedYe52kI"
 #set 12-hour or 24-hour time display
 
 class alarmData:
-    def __init__(self, username, userID, guildID, startTime, alarmTime):
+    def __init__(self, username, userID, guildID, startTime, alarmTime, alarmURL):
         self.username = username
         self.userID = userID
         self.guildID = guildID
         self.startTime = startTime
         self.alarmTime = alarmTime
-        #add alarm music track to each object
+        self.alarmURL = alarmURL
 
 
 async def printTime(hour, minute):
@@ -47,18 +47,19 @@ async def play(alarmObj):
         FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
 
         with YoutubeDL(YDL_OPTIONS) as ydl:
-            info = ydl.extract_info(url, download=False)
+            if alarmObj.alarmURL is None:
+                info = ydl.extract_info(url, download=False)
+            else:
+                info = ydl.extract_info(alarmObj.alarmURL, download=False)
         URLz=info['formats'][0]['url']
 
         voiceClient.play(FFmpegPCMAudio(URLz, **FFMPEG_OPTIONS))
 
 
-#elminiate 'message' variable
-async def checkTime(message):
+async def checkTime():
     
     while alarmList:
         if datetime.datetime.utcnow() > alarmList[0].alarmTime:
-            await message.channel.send("AHHHHHHHH!")
             await play(alarmList[0])
             del alarmList[0]
         await asyncio.sleep(1)
@@ -73,7 +74,15 @@ async def alarmProcessing (message, cli):
     else:
         startTimer = False
 
-    alarmMsg = message.content.split("-setAlarm ", 1)[1]
+    alarmURL = None
+
+    msg = message.content.split()
+    if len(msg) > 2:
+        alarmMsg = msg[1]
+        alarmURL = msg[2]
+        print(alarmURL)
+    else:
+        alarmMsg = msg[1]
 
     if not alarmMsg.isnumeric():
         await message.channel.send("Enter a valid number")
@@ -93,7 +102,7 @@ async def alarmProcessing (message, cli):
             await message.channel.send("There is already an alarm set for this time")
             return
 
-    alarmList.append(alarmData(message.author.display_name, message.author.id, message.guild.id, message.created_at, end))
+    alarmList.append(alarmData(message.author.display_name, message.author.id, message.guild.id, message.created_at, end, alarmURL))
     alarmDis = await printTime(end.hour, end.minute)
     await message.channel.send("Alarm set for " + alarmDis)
     
@@ -101,7 +110,7 @@ async def alarmProcessing (message, cli):
 
     if startTimer:
         loop = asyncio.get_event_loop()
-        loop.create_task(checkTime(message))
+        loop.create_task(checkTime())
 
 
 async def listAlarms(message):
@@ -145,6 +154,19 @@ async def deleteAlarm(message):
     await message.channel.send("Deleting alarm " + alarmNum + "\nTime: " + alarmDis)
 
     del alarmList[alarmIndex]
+
+
+async def changeDefaultUrl(message):
+    global url
+    url = message.content.split("-setDefault ", 1)[1]
+    await message.channel.send("Default alarm changed")
+
+
+async def leave(message):
+    if voiceClient is not None:
+        await voiceClient.disconnect()
+    else:
+        await message.channel.send("alarmBot is not in a voice channel")
         
 
 async def testStuff():

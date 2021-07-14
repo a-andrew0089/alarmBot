@@ -31,6 +31,12 @@ async def on_message(message):
     if message.content.startswith("-delAlarm"):
         await alarm.deleteAlarm(message)
 
+    if message.content.startswith("-setDefault"):
+        await alarm.changeDefaultUrl(message)
+
+    if message.content.startswith("-leave"):
+        await alarm.leave(message)
+
     if message.content.startswith("-test"):
         await alarm.testStuff()
 
