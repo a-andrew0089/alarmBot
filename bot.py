@@ -20,7 +20,7 @@ async def on_message(message):
         return 
 
     if message.content.startswith("-setAlarm"):
-        await alarm.alarmProcessing(message)
+        await alarm.alarmProcessing(message, client)
     
     if message.content.startswith("-listAlarms"):
         await alarm.listAlarms(message)
@@ -36,6 +36,5 @@ async def on_message(message):
 
     #command to select alarm music
     #set alarm with unique music
-    #set alarm timezone
 
 client.run(config("DISCORD_BOT_TOKEN"))

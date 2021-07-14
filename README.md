@@ -26,9 +26,10 @@ Currently the bot can:
 4. Notify user when alarm time has elapsed and remove the alarm from the list
 5. Change the timezone when displaying times
 6. Delete alarms by alarm #
+7. Bot will join voice channel of user who set alarm and play a default song
 
 Future plan:
-1. Have the bot join the server of the user who set the alarm and play a song
+1. Allow user to change default URL or set URL by alarm
 2. Have a setting to make it a recurring alarm i.e. the Pomodoro technique
 
 One can run the main bot using 

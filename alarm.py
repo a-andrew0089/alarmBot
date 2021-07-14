@@ -1,14 +1,22 @@
 import datetime
 import asyncio
+from youtube_dl import YoutubeDL
+from discord.ext import commands
+from discord import FFmpegPCMAudio
 
 alarmList = []
 timezoneOffset = 0
+client = None
+voiceClient = None
+url = "https://www.youtube.com/watch?v=y_pedYe52kI"
 
 #set 12-hour or 24-hour time display
 
 class alarmData:
-    def __init__(self, userID, startTime, alarmTime):
+    def __init__(self, username, userID, guildID, startTime, alarmTime):
+        self.username = username
         self.userID = userID
+        self.guildID = guildID
         self.startTime = startTime
         self.alarmTime = alarmTime
         #add alarm music track to each object
@@ -24,18 +32,41 @@ async def printTime(hour, minute):
     return result
 
 
+async def play(alarmObj):
+    guild = client.get_guild(alarmObj.guildID)
+    member = guild.get_member(alarmObj.userID)
+    if member.voice:
+
+        global voiceClient
+        if voiceClient is not None:
+            await voiceClient.disconnect()
+
+        voiceClient = await member.voice.channel.connect()
+
+        YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist':'True'}
+        FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+
+        with YoutubeDL(YDL_OPTIONS) as ydl:
+            info = ydl.extract_info(url, download=False)
+        URLz=info['formats'][0]['url']
+
+        voiceClient.play(FFmpegPCMAudio(URLz, **FFMPEG_OPTIONS))
+
+
 #elminiate 'message' variable
 async def checkTime(message):
     
     while alarmList:
         if datetime.datetime.utcnow() > alarmList[0].alarmTime:
-            #join server and play some music shit
             await message.channel.send("AHHHHHHHH!")
+            await play(alarmList[0])
             del alarmList[0]
         await asyncio.sleep(1)
 
 
-async def alarmProcessing (message):
+async def alarmProcessing (message, cli):
+    global client
+    client = cli
     
     if len(alarmList) == 0:
         startTimer = True
@@ -62,7 +93,7 @@ async def alarmProcessing (message):
             await message.channel.send("There is already an alarm set for this time")
             return
 
-    alarmList.append(alarmData(message.author.display_name, message.created_at, end))
+    alarmList.append(alarmData(message.author.display_name, message.author.id, message.guild.id, message.created_at, end))
     alarmDis = await printTime(end.hour, end.minute)
     await message.channel.send("Alarm set for " + alarmDis)
     
@@ -77,7 +108,7 @@ async def listAlarms(message):
     num = 1
     for x in alarmList:
         alarmDis = await printTime(x.alarmTime.hour, x.alarmTime.minute)
-        await message.channel.send(("Alarm #: "+ str(num) + "\nUser: " + str(x.userID) + 
+        await message.channel.send(("Alarm #: "+ str(num) + "\nUser: " + str(x.username) + 
             "\nAlarm: " + alarmDis ))
         num += 1  
 
@@ -117,6 +148,4 @@ async def deleteAlarm(message):
         
 
 async def testStuff():
-    print(timezoneOffset)
-    print(alarmList[0].alarmTime.hour)
-    print(alarmList[0].alarmTime.hour + timezoneOffset)
+    
