@@ -148,4 +148,5 @@ async def deleteAlarm(message):
         
 
 async def testStuff():
+    print('Test')
     
