@@ -2,6 +2,7 @@
 
 An alarm bot made with the intent to learn different tools
 
+
 ## Installation and Prerequisites  
 
 Use the package manager pip to install
@@ -17,7 +18,34 @@ When running for the first time, there will be 3 environment variables necessary
 
 Make sure you do run the first time with a `init` flag
 
+
+## Usage 
+
+Currently the bot can:
+1. Join a discord server
+2. Save user created alarms in minutes
+3. List current set alarms
+4. Notify user when alarm time has elapsed and remove the alarm from the list
+5. Change the timezone when displaying times
+6. Delete alarms by alarm #
+7. Bot will join voice channel of user who set alarm and play a default song
+8. User can change the default alarm URL or set URL by alarm
+
+Future plan:
+1. Have a setting to make it a recurring alarm i.e. the Pomodoro technique
+
+One can run the main bot using 
+```bash
+python bot.py
+```
+
+Frist time running in test mode to add config 
+```bash
+python bot.py init
+```
+
 ## Commands
+
 You must first create a text channel called `bot-commands` in order to use any
 of the following commands. This can be changed in `bot.py`.
 
@@ -47,28 +75,3 @@ of the following commands. This can be changed in `bot.py`.
 
 7. -leave
     Disconnects the bot from the voice channel it is currently connected to.
-
-## Usage 
-
-Currently the bot can:
-1. Join a discord server
-2. Save user created alarms in minutes
-3. List current set alarms
-4. Notify user when alarm time has elapsed and remove the alarm from the list
-5. Change the timezone when displaying times
-6. Delete alarms by alarm #
-7. Bot will join voice channel of user who set alarm and play a default song
-8. User can change the default alarm URL or set URL by alarm
-
-Future plan:
-1. Have a setting to make it a recurring alarm i.e. the Pomodoro technique
-
-One can run the main bot using 
-```bash
-python bot.py
-```
-
-Frist time running in test mode to add config 
-```bash
-python bot.py init
-```
