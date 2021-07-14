@@ -121,6 +121,14 @@ async def listAlarms(message):
             "\nAlarm: " + alarmDis ))
         num += 1  
 
+    
+async def clearList(message):
+    if len(alarmList) > 0:
+        alarmList.clear()
+        await message.channel.send("Alarm list cleared")
+    else:
+        await message.channel.send("Alarm list is empty")
+
 
 async def adjustTimezone(message):
     global timezoneOffset

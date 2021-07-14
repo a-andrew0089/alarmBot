@@ -17,13 +17,19 @@ async def on_ready():
 @client.event
 async def on_message(message): 
     if message.author == client.user:
-        return 
+        return
+
+    if message.channel.name != "bot-commands":
+        return
 
     if message.content.startswith("-setAlarm"):
         await alarm.alarmProcessing(message, client)
     
     if message.content.startswith("-listAlarms"):
         await alarm.listAlarms(message)
+
+    if message.content.startswith("-clearList"):
+        await alarm.clearList(message)
 
     if message.content.startswith("-setTZ"):
         await alarm.adjustTimezone(message)
@@ -39,8 +45,5 @@ async def on_message(message):
 
     if message.content.startswith("-test"):
         await alarm.testStuff()
-
-    #command to select alarm music
-    #set alarm with unique music
 
 client.run(config("DISCORD_BOT_TOKEN"))

@@ -2,7 +2,6 @@
 
 An alarm bot made with the intent to learn different tools
 
-
 ## Installation and Prerequisites  
 
 Use the package manager pip to install
@@ -17,6 +16,38 @@ When running for the first time, there will be 3 environment variables necessary
 3. GOOGLE_FILE_PATH="file name to when running store credentials" 
 
 Make sure you do run the first time with a `init` flag
+
+## Commands
+You must first create a text channel called `bot-commands` in order to use any
+of the following commands. This can be changed in `bot.py`.
+
+1. -setAlarm (minutes) (youtube URL)
+    Input a time in minute between 1 and 180 and sets the bot to activate an alarm
+    once the selected time has passed. You can also put a youtube URL after the
+    minutes to select a unique video for the alarm.
+
+2. -listAlarms
+    List all alarms currently in the queue and provides alarm number, the name
+    of the user who made it, and the time the alarm will go off. The time listed
+    is based on the timezone set, default is UTC.
+
+3. -delAlarm (alarm number)
+    Delete the alarm specified by the user. Alarm number is dictated
+    by placement in the alarm list.
+
+4. -clearList
+    Clears the entire alarm list.
+
+5. -setTZ (timezone offset)
+    Changes the displayed time according to the offset given. Based on UTC timezones.
+    Only numbers between -12 and 14 are allowed.
+
+6. -setDefault (youtube URL)
+    Changes the default video that plays after the alarm time has elapsed.
+
+7. -leave
+    Disconnects the bot from the voice channel it is currently connected to.
+
 ## Usage 
 
 Currently the bot can:
