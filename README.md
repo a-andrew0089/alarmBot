@@ -1,6 +1,7 @@
 # Discord Alarm Bot
 
-An alarm bot made with the intent to learn different tools
+A Discord bot that allows users to set alarms which will play audio in voice channels.
+Made with the intention to learn different tools and try stuff out.
 
 
 ## Installation and Prerequisites  
@@ -10,6 +11,8 @@ Use the package manager pip to install
 ```bash
 pip install -r requirements.txt
 ```
+
+Install FFMPEG from https://www.ffmpeg.org/download.html
 
 When running for the first time, there will be 3 environment variables necessary:
 1. DISCORD_BOT_TOKEN = THE DISCORD BOT TOKEN
@@ -72,5 +75,11 @@ Changes the default video that plays after the alarm time has elapsed.
 #### -displayFormat
 Toggle between 12 and 24-hour display format
 
-#### -leave
+#### -silence
 Disconnects the bot from the voice channel it is currently connected to.
+
+
+## Credits
+https://discord.com/
+https://www.ffmpeg.org/
+https://www.youtube.com/
