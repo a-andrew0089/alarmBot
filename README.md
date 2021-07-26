@@ -44,6 +44,7 @@ Frist time running in test mode to add config
 python bot.py init
 ```
 
+
 ## Commands
 
 You must first create a text channel called `bot-commands` in order to use any

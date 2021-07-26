@@ -43,7 +43,4 @@ async def on_message(message):
     if message.content.startswith("-leave"):
         await alarm.leave(message)
 
-    if message.content.startswith("-test"):
-        await alarm.testStuff()
-
 client.run(config("DISCORD_BOT_TOKEN"))

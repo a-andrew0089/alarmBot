@@ -57,7 +57,7 @@ async def play(alarmObj):
 
 
 async def checkTime():
-    
+
     while alarmList:
         if datetime.datetime.utcnow() > alarmList[0].alarmTime:
             await play(alarmList[0])
@@ -68,7 +68,7 @@ async def checkTime():
 async def alarmProcessing (message, cli):
     global client
     client = cli
-    
+
     if len(alarmList) == 0:
         startTimer = True
     else:
@@ -121,7 +121,7 @@ async def listAlarms(message):
             "\nAlarm: " + alarmDis ))
         num += 1  
 
-    
+
 async def clearList(message):
     if len(alarmList) > 0:
         alarmList.clear()
@@ -152,7 +152,7 @@ async def deleteAlarm(message):
     alarmNum = message.content.split("-delAlarm ", 1)[1]
     if not alarmNum.isnumeric():
         await message.channel.send("Please enter a number")
-    
+
     alarmIndex = int(alarmNum)-1
     if alarmIndex > len(alarmList) or alarmIndex < 0:
         await message.channel.send("Please enter a valid alarm number")
@@ -175,8 +175,3 @@ async def leave(message):
         await voiceClient.disconnect()
     else:
         await message.channel.send("alarmBot is not in a voice channel")
-        
-
-async def testStuff():
-    print('Test')
-    
