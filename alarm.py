@@ -1,3 +1,6 @@
+# Written by Alex Andrew
+# Made to be implemented within the General Discord Bot Project: https://github.com/dudley2y/discord-general-bot
+
 import datetime
 import asyncio
 from youtube_dl import YoutubeDL
@@ -6,11 +9,10 @@ from discord import FFmpegPCMAudio
 
 alarmList = []
 timezoneOffset = 0
+hourFormat = False
 client = None
-voiceClient = None
+voiceClient = None 
 url = "https://www.youtube.com/watch?v=y_pedYe52kI"
-
-#set 12-hour or 24-hour time display
 
 class alarmData:
     def __init__(self, username, userID, guildID, startTime, alarmTime, alarmURL):
@@ -27,6 +29,14 @@ async def printTime(hour, minute):
         hour = hour - 24
     elif (hour + timezoneOffset) < 0:
         hour = hour + 24
+        
+    global hourFormat
+        
+    if hourFormat and hour > 12:
+        hour = hour-12
+    
+    if hourFormat and hour is 0:
+        hour = hour+12
 
     result = ("{:02d}".format(hour + timezoneOffset) + ":{:02d}".format(minute))
     return result
@@ -179,4 +189,15 @@ async def leave(message):
 
 async def testStuff():
     print('Test')
+   
+async def changeFormat(message):
+    global hourFormat
+    
+    if hourFormat:
+        hourFormat = False
+        await message.channel.send("Changed to 24-hour display format")
+    else:
+        hourFormat = True
+        await message.channel.send("Changed to 12-hour display format")
+        
     
