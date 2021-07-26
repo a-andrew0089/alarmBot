@@ -40,7 +40,7 @@ async def on_message(message):
     if message.content.startswith("-setDefault"):
         await alarm.changeDefaultUrl(message)
 
-    if message.content.startswith("-leave"):
+    if message.content.startswith("-silence"):
         await alarm.leave(message)
         
     if message.content.startswith("-displayFormat"):
