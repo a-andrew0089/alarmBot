@@ -42,6 +42,9 @@ async def on_message(message):
 
     if message.content.startswith("-leave"):
         await alarm.leave(message)
+        
+    if message.content.startswith("-displayFormat"):
+        await alarm.changeFormat(message)
 
     if message.content.startswith("-test"):
         await alarm.testStuff()
