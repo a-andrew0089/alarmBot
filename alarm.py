@@ -184,14 +184,8 @@ async def leave(message):
     if voiceClient is not None:
         await voiceClient.disconnect()
     else:
-<<<<<<< HEAD
-        await message.channel.send("alarmBot is not in a voice channel")
-=======
         await message.channel.send("alarmBot is not in a voice channel")
         
-
-async def testStuff():
-    print('Test')
    
 async def changeFormat(message):
     global hourFormat
@@ -202,6 +196,3 @@ async def changeFormat(message):
     else:
         hourFormat = True
         await message.channel.send("Changed to 12-hour display format")
-        
-    
->>>>>>> e308078e3e6f390056af8d5214377dae3f112593
