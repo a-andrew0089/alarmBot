@@ -42,5 +42,15 @@ async def on_message(message):
 
     if message.content.startswith("-leave"):
         await alarm.leave(message)
+        
+    if message.content.startswith("-displayFormat"):
+        await alarm.changeFormat(message)
+
+<<<<<<< HEAD
+client.run(config("DISCORD_BOT_TOKEN"))
+=======
+    if message.content.startswith("-test"):
+        await alarm.testStuff()
 
 client.run(config("DISCORD_BOT_TOKEN"))
+>>>>>>> e308078e3e6f390056af8d5214377dae3f112593
