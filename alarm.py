@@ -1,5 +1,6 @@
 # Written by Alex Andrew
-# Made to be implemented within the General Discord Bot Project: https://github.com/dudley2y/discord-general-bot
+# Made to be implemented within the General Discord Bot Project: 
+# https://github.com/dudley2y/discord-general-bot
 
 import datetime
 import asyncio
@@ -24,6 +25,7 @@ class alarmData:
         self.alarmURL = alarmURL
 
 
+# Formats the time to be printed so it displays correctly and is easy to read 
 async def printTime(hour, minute):
     if (hour + timezoneOffset) > 24:
         hour = hour - 24
@@ -42,13 +44,15 @@ async def printTime(hour, minute):
     return result
 
 
+# Creates a voice client and plays either the default youtube video or the user-defined
+# video as the alarm for the user
 async def play(alarmObj):
     guild = client.get_guild(alarmObj.guildID)
     member = guild.get_member(alarmObj.userID)
-    if member.voice:
+    if member.voice: #check if the user that set the alarm is in a voice channel
 
         global voiceClient
-        if voiceClient is not None:
+        if voiceClient is not None: #if the bot is currently in a voice channel it will leave first
             await voiceClient.disconnect()
 
         voiceClient = await member.voice.channel.connect()
@@ -66,6 +70,7 @@ async def play(alarmObj):
         voiceClient.play(FFmpegPCMAudio(URLz, **FFMPEG_OPTIONS))
 
 
+# Makes use of a separate thread to check if an alarm time has elapsed
 async def checkTime():
 
     while alarmList:
@@ -75,6 +80,8 @@ async def checkTime():
         await asyncio.sleep(1)
 
 
+# Processes the user input and adds the new alarm to the queue then starts the
+# separate thread to check the time
 async def alarmProcessing (message, cli):
     global client
     client = cli
@@ -123,6 +130,7 @@ async def alarmProcessing (message, cli):
         loop.create_task(checkTime())
 
 
+# Lists the full alarm queue in discord
 async def listAlarms(message):
     num = 1
     for x in alarmList:
@@ -132,6 +140,7 @@ async def listAlarms(message):
         num += 1  
 
 
+# Empties the queue of all alarms
 async def clearList(message):
     if len(alarmList) > 0:
         alarmList.clear()
@@ -140,6 +149,8 @@ async def clearList(message):
         await message.channel.send("Alarm list is empty")
 
 
+# Adjusts the global offset variable so users can change the
+# displayed timezone to reflect their own, default is in UTC
 async def adjustTimezone(message):
     global timezoneOffset
     dt = datetime.datetime.utcnow()
@@ -158,6 +169,7 @@ async def adjustTimezone(message):
         await message.channel.send("Please enter an integer")
 
 
+# Deletes an alarm specified by the alarms place in the queue
 async def deleteAlarm(message):
     alarmNum = message.content.split("-delAlarm ", 1)[1]
     if not alarmNum.isnumeric():
@@ -174,12 +186,14 @@ async def deleteAlarm(message):
     del alarmList[alarmIndex]
 
 
+# Change the 'url' variable so the default alarm audio changes as well
 async def changeDefaultUrl(message):
     global url
     url = message.content.split("-setDefault ", 1)[1]
     await message.channel.send("Default alarm changed")
 
 
+# Commands the bot to leave a voice channel if it is in one
 async def leave(message):
     if voiceClient is not None:
         await voiceClient.disconnect()
@@ -187,6 +201,7 @@ async def leave(message):
         await message.channel.send("alarmBot is not in a voice channel")
         
    
+# Toggles the global 'hourFormat' variable to display 12 or 24 hour formats
 async def changeFormat(message):
     global hourFormat
     
