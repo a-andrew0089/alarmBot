@@ -1,7 +1,6 @@
 # Discord Alarm Bot
 
-A Discord bot that allows users to set alarms which will play audio in voice channels.
-Made with the intention to learn different tools and try stuff out.
+A Discord bot that allows users to set alarms which will play audio in voice channels.Made with the intention to learn different tools and try stuff out.
 
 
 ## Installation and Prerequisites  
